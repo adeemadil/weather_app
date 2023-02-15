@@ -22,7 +22,7 @@ function WeatherWidget({
   const flipCard = () => {
     setIsFlipped(!isFlipped);
   };
-  
+
   return (
     <div
       className={!isLoading ? "weather_widget" : "weather_widget is_loading"}
@@ -33,8 +33,9 @@ function WeatherWidget({
         <div>
           <div
             className={`card ${isFlipped ? "is-flipped" : ""}`}
-            onMouseEnter={flipCard}
-            onMouseLeave={flipCard}
+            // onMouseEnter={flipCard}
+            // onMouseLeave={flipCard}
+            onClick={flipCard}
           >
             <div
               className="card-front"
