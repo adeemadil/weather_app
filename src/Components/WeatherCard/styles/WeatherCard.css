@@ -1,0 +1,82 @@
+.WeatherCard {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    height: 200px;
+    justify-content: space-between;
+    padding: 20px;
+    position: relative;
+    transition: transform 0.6s;
+    width: 250px;
+}
+
+.WeatherCard:hover {
+    transform: rotateY(180deg);
+}
+
+.WeatherCard .front {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.WeatherCard .back {
+    transform: rotateY(180deg);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.WeatherCard .back p {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.WeatherCard .back span {
+    font-size: 14px;
+    color: #666;
+}
+
+.WeatherCard .icon {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+.WeatherCard .temperature {
+    font-size: 36px;
+    font-weight: 500;
+}
+
+.WeatherCard .description {
+    font-size: 14px;
+    color: #666;
+}
+
+.WeatherCard .extra-info {
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.WeatherCard .extra-info span {
+    display: block;
+    color: #666;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.WeatherCard .extra-info div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}

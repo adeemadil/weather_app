@@ -5,8 +5,10 @@ import WeatherWidget from "./Components/WeatherWidget/WeatherWidget";
 
 import "./App.css";
 
-const API_URL =
-  "https://api.openweathermap.org/data/2.5/onecall?lat=33.6844&lon=73.0479&exclude=minutely,hourly,alerts&units=metric&appid=d0b1e41aff3a154c86614b69e60faa39";
+const lat = 33.6844;
+const lon = 73.0479;
+
+const API_URL = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&units=metric&appid=${process.env.REACT_APP_WEATHER_API_KEY}`;
 
 function App() {
   const [weatherData, setWeatherData] = useState([{}, {}, {}, {}, {}]);
@@ -16,7 +18,7 @@ function App() {
       .get(API_URL)
       .then((res) => {
         if (res.status === 200) {
-          console.log(res)
+          console.log(res);
           const dailyTemp = res.data.daily;
 
           let weatherDataTemp = [];
@@ -28,6 +30,7 @@ function App() {
               date: new Date(daily["dt"] * 1000),
               max: Math.round(daily["temp"]["max"]),
               min: Math.round(daily["temp"]["min"]),
+              description: daily["weather"][0]["description"],
               icon: daily["weather"][0]["icon"],
             });
           }
@@ -45,14 +48,16 @@ function App() {
 
   return (
     <div className="App">
-      <div id="weatherContainer">
-        {weatherData.map((data, i) => (
-          <WeatherWidget
-            key={`weather_${i}`}
-            {...data}
-            isLoading={Object.keys(data).length === 0}
-          />
-        ))}
+      <div className="weather-cards-container">
+        <div id="weatherContainer">
+          {weatherData.map((data, i) => (
+            <WeatherWidget
+              key={`weather_${i}`}
+              {...data}
+              isLoading={Object.keys(data).length === 0}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
