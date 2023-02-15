@@ -1,0 +1,51 @@
+.weather_widget {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.weather_widget:first-of-type {
+    background-color: #dddddd;
+}
+
+.is_loading > img {
+    width: 50%;
+}
+
+.weather_widget > div {
+    height: 85%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.weekday {
+    color: #8d8d8d;
+    font-weight: bold;
+    font-weight: 0.9em;
+}
+
+.weather_icon {
+    flex: 1;
+}
+
+.temp {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.temp > div {
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    color: #8d8d8d;
+}
+
+.temp > div:first-child {
+    color: #333333;
+}
