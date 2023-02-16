@@ -31,6 +31,9 @@ function App() {
               max: Math.round(daily["temp"]["max"]),
               min: Math.round(daily["temp"]["min"]),
               description: daily["weather"][0]["description"],
+              windSpeed: daily["wind_speed"],
+              humidity: daily["humidity"],
+              pressure: daily["pressure"],
               icon: daily["weather"][0]["icon"],
             });
           }
