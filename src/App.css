@@ -2,7 +2,7 @@
   --container_height: 160px;
 }
 
-.App {
+/* .App {
   height: 80vh;
   width: 100vw;
   display: flex;
@@ -11,18 +11,25 @@
   flex-wrap: wrap;
   flex-direction: column;
   align-content: center;
-}
+} */
 
 section {
   padding: 10px;
+}
+
+.App>h1 {
+  margin-top: 6%;
+  text-align: center;
 }
 
 #weatherContainer {
   border: 1px solid #dddddd;
   height: var(--container_height);
   padding: 15px;
+  margin-top: 5vh;
 
   display: grid;
+  justify-content: space-around;
   grid-template-columns: repeat(5, calc(var(--container_height) * 0.75));
 }
 
