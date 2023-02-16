@@ -6,7 +6,7 @@ import WeatherWidget from "./Components/WeatherWidget/WeatherWidget";
 import "./App.css";
 
 const API_URL =
-  "https://api.openweathermap.org/data/2.5/onecall?lat=33.6844&lon=73.0479&exclude=minutely,hourly,alerts&units=metric&appid=d0b1e41aff3a154c86614b69e60faa39";
+  `https://api.openweathermap.org/data/2.5/onecall?lat=33.6844&lon=73.0479&exclude=minutely,hourly,alerts&units=metric&appid=${process.env.REACT_APP_WEATHER_API_KEY}`;
 
 function App() {
   const [weatherData, setWeatherData] = useState([{}, {}, {}, {}, {}]);
