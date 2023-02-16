@@ -16,6 +16,7 @@ function WeatherWidget({
   windSpeed,
   humidity,
   pressure,
+  id,
 }) {
   const [isFlipped, setIsFlipped] = useState(false);
 
@@ -25,6 +26,7 @@ function WeatherWidget({
 
   return (
     <div
+      id={id}
       className={!isLoading ? "weather_widget" : "weather_widget is_loading"}
     >
       {isLoading ? (

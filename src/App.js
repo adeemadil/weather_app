@@ -51,11 +51,15 @@ function App() {
 
   return (
     <div className="App">
+      <h1>Weather App</h1>
+      <section>Map</section>
+      <section>Search</section>
       <div className="weather-cards-container">
         <div id="weatherContainer">
           {weatherData.map((data, i) => (
             <WeatherWidget
               key={`weather_${i}`}
+              id={`weather_widget_${i}`}
               {...data}
               isLoading={Object.keys(data).length === 0}
             />

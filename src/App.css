@@ -3,12 +3,18 @@
 }
 
 .App {
-  height: 100vh;
+  height: 80vh;
   width: 100vw;
-
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-content: center;
+}
+
+section {
+  padding: 10px;
 }
 
 #weatherContainer {
@@ -18,4 +24,36 @@
 
   display: grid;
   grid-template-columns: repeat(5, calc(var(--container_height) * 0.75));
+}
+
+@media screen and (max-width: 640px) {
+  #weatherContainer {
+    grid-template-columns: repeat(3, calc(var(--container_height) * 0.75));
+  }
+
+  #weather_widget_3 {
+    display: none;
+  }
+
+  #weather_widget_4 {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  #weatherContainer {
+    grid-template-columns: repeat(2, calc(var(--container_height) * 0.75));
+  }
+
+  #weather_widget_2 {
+    display: none;
+  }
+
+  #weather_widget_3 {
+    display: none;
+  }
+
+  #weather_widget_4 {
+    display: none;
+  }
 }
