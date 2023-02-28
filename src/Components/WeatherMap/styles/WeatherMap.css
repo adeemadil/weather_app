@@ -30,3 +30,7 @@
     z-index: 1;
     font-size: 14px;
 }
+
+ div.suggestions-wrapper > ul {
+    background-color: #ffffff;
+}

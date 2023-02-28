@@ -10,55 +10,48 @@ import "./App.css";
 
 function App() {
   const [weatherData, setWeatherData] = useState([{}, {}, {}, {}, {}]);
-  const [lat, setLat] = useState(33.6844);
-  const [lon, setLon] = useState(73.0479);
+  const [location, setLocations] = useState({ lat: 33.6844, lon: 73.0479 });
 
-  const API_URL = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&units=metric&appid=${process.env.REACT_APP_WEATHER_API_KEY}`;
+  const locationChangeHandler = (lat, lon) => {
+    const API_URL = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&units=metric&appid=${process.env.REACT_APP_WEATHER_API_KEY}`;
+    axios
+      .get(API_URL)
+      .then((res) => {
+        if (res.status === 200) {
+          console.log(res);
+          const dailyTemp = res.data.daily;
 
-  const locationChangeHandler = useCallback(
-    (lat, lon) => {
-      setLat(lat);
-      setLon(lon);
-      axios
-        .get(API_URL)
-        .then((res) => {
-          if (res.status === 200) {
-            console.log(res);
-            const dailyTemp = res.data.daily;
+          let weatherDataTemp = [];
+          let minDays = Math.min(5, dailyTemp.length);
+          for (let i = 0; i < minDays; i++) {
+            let daily = dailyTemp[i];
 
-            let weatherDataTemp = [];
-            let minDays = Math.min(5, dailyTemp.length);
-            for (let i = 0; i < minDays; i++) {
-              let daily = dailyTemp[i];
-
-              weatherDataTemp.push({
-                date: new Date(daily["dt"] * 1000),
-                max: Math.round(daily["temp"]["max"]),
-                min: Math.round(daily["temp"]["min"]),
-                description: daily["weather"][0]["description"],
-                windSpeed: daily["wind_speed"],
-                humidity: daily["humidity"],
-                pressure: daily["pressure"],
-                icon: daily["weather"][0]["icon"],
-              });
-            }
-
-            console.log(weatherDataTemp);
-
-            setWeatherData(weatherDataTemp);
+            weatherDataTemp.push({
+              date: new Date(daily["dt"] * 1000),
+              max: Math.round(daily["temp"]["max"]),
+              min: Math.round(daily["temp"]["min"]),
+              description: daily["weather"][0]["description"],
+              windSpeed: daily["wind_speed"],
+              humidity: daily["humidity"],
+              pressure: daily["pressure"],
+              icon: daily["weather"][0]["icon"],
+            });
           }
-        })
-        .catch((e) => {
-          console.log(e);
-          alert("Some Error Occurred!");
-        });
-    },
-    [API_URL]
-  );
+
+          console.log(weatherDataTemp);
+
+          setWeatherData(weatherDataTemp);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        alert("Some Error Occurred!");
+      });
+  };
 
   useEffect(() => {
-    locationChangeHandler(lat, lon);
-  }, [lat, locationChangeHandler, lon]);
+    locationChangeHandler(location.lat, location.lon);
+  }, [location]);
 
   return (
     <div className="App">
@@ -66,9 +59,8 @@ function App() {
       <div className="map-container">
         <section>
           <WeatherMap
-            latt={lat}
-            lon={lon}
-            onLocationChange={locationChangeHandler}
+            location={location}
+            setLocations={setLocations}
           />
         </section>
       </div>

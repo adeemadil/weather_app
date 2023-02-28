@@ -6,9 +6,8 @@ import "mapbox-gl/dist/mapbox-gl.css"; // import the CSS file
 
 import "./styles/WeatherMap.css";
 
-const WeatherMap = ({ lon, latt, onLocationChange }) => {
+const WeatherMap = ({ location, setLocations }) => {
   const mapContainer = useRef(null);
-  const coordsRef = useRef({ lat: latt, lng: lon });
   const [zoom, setZoom] = useState(13);
 
   useEffect(() => {
@@ -16,7 +15,7 @@ const WeatherMap = ({ lon, latt, onLocationChange }) => {
     const map = new mapboxgl.Map({
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/streets-v12",
-      center: [coordsRef.current.lng, coordsRef.current.lat],
+      center: [location.lon, location.lat],
       zoom: zoom,
     });
 
@@ -25,36 +24,31 @@ const WeatherMap = ({ lon, latt, onLocationChange }) => {
       mapboxgl: mapboxgl,
     });
     geocoder.on("result", (event) => {
-      coordsRef.current.lng = event.result.center[0];
-      coordsRef.current.lat = event.result.center[1];
       console.log(event.result.center[0], event.result.center[1]);
       setZoom(12);
-      console.log("lat", coordsRef.current.lat, "lng", coordsRef.current.lng);
-      onLocationChange(coordsRef.current.lat, coordsRef.current.lng);
+      console.log("lat", location.lat, "lng", location.lng);
+      setLocations({
+        lon: event.result.center[0],
+        lat: event.result.center[1],
+      });
     });
     map.addControl(geocoder);
 
-    map.on("move", () => {
-      console.log(
-        map.getCenter().lng.toFixed(4),
-        map.getCenter().lat.toFixed(4)
-      );
-      coordsRef.current.lng = map.getCenter().lng.toFixed(4);
-      coordsRef.current.lat = map.getCenter().lat.toFixed(4);
+    map.on("click", (e) => {
+      console.log(e.lngLat.lng.toFixed(4), e.lngLat.lat.toFixed(4));
       setZoom(map.getZoom().toFixed(2));
-      console.log("lat", coordsRef.current.lat, "lng", coordsRef.current.lat);
-      onLocationChange(coordsRef.current.lat, coordsRef.current.lng);
+      console.log("lat", location.lat, "lng", location.lng);
+      setLocations({ lat: e.lngLat.lat, lon: e.lngLat.lng });
     });
 
     return () => map.remove();
-  }, [coordsRef, zoom, onLocationChange]);
+  }, [zoom, location]);
 
   return (
     <div>
       <div className="map-container" ref={mapContainer} />
       <div className="sidebar">
-        Longitude: {coordsRef.current.lng} | Latitude: {coordsRef.current.lat} |
-        Zoom: {zoom}
+        Longitude: {location.lon} | Latitude: {location.lat} | Zoom: {zoom}
       </div>
     </div>
   );
